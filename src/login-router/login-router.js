@@ -16,7 +16,7 @@ router
       .first()
       .then((result)=>{
         if(result === undefined)
-          res.status(401).json({error:'your username or password is invalid'});
+          return res.status(401).json({error:'your username or password is invalid'});
         return bcrypt.compare(password,result.password)
           .then(isMatch=>{
             if(!isMatch)
