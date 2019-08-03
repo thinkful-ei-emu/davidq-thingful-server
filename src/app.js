@@ -4,11 +4,12 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
+//routes
 const thingsRouter = require('./things/things-router');
 const reviewsRouter = require('./reviews/reviews-router');
 const loginRouter = require('./login-router/login-router');
 const registerRouter = require('./register-router/register.route');
-const auth = require('./middleware/auth');
+const refreshRoute = require('./refresh.route/refresh.route');
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/api/things', thingsRouter);
 app.use('/api/reviews', reviewsRouter);
 app.use('/api/login',loginRouter);
 app.use('/api/register', registerRouter);
+app.use('/api/refresh',refreshRoute);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;

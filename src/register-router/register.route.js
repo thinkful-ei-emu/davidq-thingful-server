@@ -13,7 +13,6 @@ router
   .route('/')
   .post(require('express').json(),(req,res,next)=>{
     let {user_name,full_name,password,nickname = ''} = req.body;
-    debugger;
     if(!user_name || !full_name ||!password)
       return res.status(400).json({error:'Must include name, username, password'});
     if(!validateForm(full_name,nickname,user_name,password))

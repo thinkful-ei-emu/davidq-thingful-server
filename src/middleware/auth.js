@@ -7,8 +7,10 @@ module.exports = function(req,res,next){
   let token = req.get('Authorization').split(' ')[1] || '';
   jwt.verify(token,process.env.JWT_SECERT, async (err, payload)=>{
     //console.log(err);
-    if(err)
+    if(err){
       console.log('error from jwt: ',new Error(err));
+      return res.status(401).json(new Error(err));
+    }
     req.user = await req.app.get('db')('thingful_users').select('*').where({id: payload.user_id}).first();
     next();
   });

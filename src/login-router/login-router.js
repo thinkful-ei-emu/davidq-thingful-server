@@ -1,8 +1,8 @@
 const router = require('express').Router();
 require('dotenv').config();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const parse = require('express').json();
+const tokenService = require('../sevices/jwtoken.service');
 
 router
   .post('/',parse, (req,res,next)=>{
@@ -23,10 +23,7 @@ router
               res.status(401).json({error:'your username or password is invalid'});
             else{
               //all checks passes this is a valid user, so give them a token
-              let token = jwt.sign({user_id: result.id},process.env.JWT_SECERT,{
-                subject: result.user_name,
-                algorithm: 'HS256'
-              });
+              let token = tokenService.getToken(result);
               res.status(200).json({token});
             }
           }).catch(next);
